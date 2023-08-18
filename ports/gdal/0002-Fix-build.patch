@@ -1,0 +1,33 @@
+diff --git a/makefile.vc b/makefile.vc
+index c12a164670..e0cf8069e7 100644
+--- a/makefile.vc
++++ b/makefile.vc
+@@ -84,7 +84,7 @@ staticlib:	$(LIB_DEPENDS)
+ 	call <<clean_main_build_output.bat
+ $(CLEAN_MAIN_BUILD_OUTPUT_CMDS)
+ <<
+-	lib /nologo /out:gdal.lib $(LIBOBJ) $(EXTERNAL_LIBS)
++	lib /nologo /LTCG /out:gdal.lib $(LIBOBJ) $(EXTERNAL_LIBS)
+ 
+ appslib-target:
+ 	cd apps
+@@ -230,14 +230,8 @@ install: default
+ 	cd ..\apps
+ 	$(MAKE) /f makefile.vc install
+ 	cd ..
+-	$(INSTALL) data\*.* $(DATADIR)
+-	$(INSTALL) LICENSE.TXT $(DATADIR)
+-!IFDEF HTMLDIR
+-	-mkdir $(HTMLDIR)
+-	cd frmts
+-	$(MAKE) /f makefile.vc html-install
+-	cd ..
+-!ENDIF
++	$(INSTALL) data\*.* "$(DATADIR)"
++	$(INSTALL) LICENSE.TXT "$(DATADIR)"
+ !IFDEF INCLUDE_OGR_FRMTS
+ 	cd ogr\ogrsf_frmts
+ 	$(MAKE) /f makefile.vc plugins-install
+-- 
+2.25.0.windows.1
+

@@ -1,0 +1,25 @@
+From 0556d3c3db86fca1ad260ee60aafb5bc033ccc77 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?S=C3=B6ren=20Discher?= <soeren.discher@hpi.de>
+Date: Fri, 10 Jan 2020 18:54:02 +0100
+Subject: [PATCH] tr
+
+---
+ src/lib_proj.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/lib_proj.cmake b/src/lib_proj.cmake
+index bc27bafe..c09dbed9 100644
+--- a/src/lib_proj.cmake
++++ b/src/lib_proj.cmake
+@@ -441,7 +441,7 @@ if(USE_THREAD AND Threads_FOUND AND CMAKE_USE_PTHREADS_INIT)
+ endif()
+ 
+ include_directories(${SQLITE3_INCLUDE_DIR})
+-target_link_libraries(${PROJ_CORE_TARGET} ${SQLITE3_LIBRARY})
++target_link_libraries(${PROJ_CORE_TARGET} PRIVATE ${SQLITE3_LIBRARY})
+ 
+ if(MSVC AND BUILD_LIBPROJ_SHARED)
+   target_compile_definitions(${PROJ_CORE_TARGET}
+-- 
+2.23.0.windows.1
+
