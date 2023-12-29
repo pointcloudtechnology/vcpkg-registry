@@ -1,8 +1,8 @@
 {
   "name": "gdal",
   "version-semver": "3.0.2",
-  "port-version": 0,
-  "description": "The Geographic Data Abstraction Library for reading and writing geospatial raster and vector data",
+  "port-version": 1,
+  "description": "A stub package that was used to pull in a custom version of GDAL. Do not depend on this package.",
   "homepage": "https://gdal.org",
   "supports": "!arm",
   "dependencies": [
@@ -12,7 +12,7 @@
     "proj4",
     "sqlite3",
     "zlib",
-	{
+    {
       "name": "vcpkg-cmake",
       "host": true
     },
