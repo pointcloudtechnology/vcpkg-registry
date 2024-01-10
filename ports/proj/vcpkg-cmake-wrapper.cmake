@@ -1,0 +1,5 @@
+find_package(PROJ4 REQUIRED)
+
+add_library(PROJ::proj ALIAS PROJ4::proj)
+set(PROJ_FOUND ${PROJ4_FOUND})
+set(PROJ_INCLUDE_DIR ${PROJ4_INCLUDE_DIR})

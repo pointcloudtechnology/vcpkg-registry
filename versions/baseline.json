@@ -2,23 +2,23 @@
   "default": {
     "gdal": {
       "baseline": "3.0.2",
-	  "port-version": 0
+      "port-version": 1
     },
-	"glm": {
+    "glm": {
       "baseline": "0.9.9.8",
-	  "port-version": 0
+      "port-version": 0
     },
-	"globjects": {
+    "globjects": {
       "baseline": "1.1.0",
-	  "port-version": 0
+      "port-version": 0
     },
-	"proj": {
+    "proj": {
       "baseline": "0",
-	  "port-version": 0
+      "port-version": 1
     },
-	"proj4": {
+    "proj4": {
       "baseline": "6.3.2",
-	  "port-version": 0
+      "port-version": 1
     }
   }
 }

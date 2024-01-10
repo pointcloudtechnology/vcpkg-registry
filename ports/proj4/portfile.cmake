@@ -1,7 +1,7 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO OSGeo/PROJ
-    REF 6.3.2
+    REF "${VERSION}"
     SHA512 05443c3b25d51ae6dedaf5343b8bda4024f3b6f8bed34a8d684d5948c5a7a388afc0c73abc248a270e6ed141d6826f4c9e9e84675c8d6f25c635b8aca558286a
     HEAD_REF master
     PATCHES
@@ -22,18 +22,14 @@ vcpkg_from_github(
 )
 
 file(COPY ${SOURCE_PATH_DATA}/ DESTINATION ${SOURCE_PATH}/data
-	REGEX ".github|cmake|CMakeLists.txt|europe|HOWTORELEASE|lla|north-america|oceania|README.DATUMGRID" EXCLUDE 
-	)
+    REGEX ".github|cmake|CMakeLists.txt|europe|HOWTORELEASE|lla|north-america|oceania|README.DATUMGRID" EXCLUDE 
+)
 
-if(VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic")
-  set(VCPKG_BUILD_SHARED_LIBS ON)
-else()
-  set(VCPKG_BUILD_SHARED_LIBS OFF)
-endif()
+string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" PROJ_SHARED_LIBS)
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
-	FEATURES
-		database BUILD_PROJ_DATABASE
+    FEATURES
+        database BUILD_PROJ_DATABASE
 )
 
 if ("database" IN_LIST FEATURES)
@@ -63,26 +59,27 @@ endif()
 vcpkg_cmake_configure(
     SOURCE_PATH ${SOURCE_PATH}
     OPTIONS ${FEATURE_OPTIONS}
-		-DBUILD_LIBPROJ_SHARED=${VCPKG_BUILD_SHARED_LIBS}
-		-DPROJ_LIB_SUBDIR=lib
-		-DPROJ_INCLUDE_SUBDIR=include
-		-DPROJ_DATA_SUBDIR=share/proj4
-		-DBUILD_CCT=OFF
-		-DBUILD_CS2CS=OFF
-		-DBUILD_GEOD=OFF
-		-DBUILD_GIE=OFF
-		-DBUILD_PROJ=OFF
-		-DBUILD_PROJINFO=OFF
-		-DPROJ_TESTS=OFF
-		-DEXE_SQLITE3=${SQLITE3_BIN_PATH}/sqlite3${BIN_SUFFIX}
+        -DBUILD_LIBPROJ_SHARED=${PROJ_SHARED_LIBS}
+        -DPROJ_LIB_SUBDIR=lib
+        -DPROJ_INCLUDE_SUBDIR=include
+        -DPROJ_DATA_SUBDIR=share/proj4
+        -DBUILD_CCT=OFF
+        -DBUILD_CS2CS=OFF
+        -DBUILD_GEOD=OFF
+        -DBUILD_GIE=OFF
+        -DBUILD_PROJ=OFF
+        -DBUILD_PROJINFO=OFF
+        -DPROJ_TESTS=OFF
+        -DEXE_SQLITE3=${SQLITE3_BIN_PATH}/sqlite3${BIN_SUFFIX}
 )
 
 vcpkg_cmake_install()
 vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/proj4)
+vcpkg_copy_pdbs()
 
 file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/include)
 file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/share)
 
 # for gdal
-file(RENAME ${CURRENT_PACKAGES_DIR}/debug/bin/proj_d.dll ${CURRENT_PACKAGES_DIR}/debug/bin/proj.dll)
-file(INSTALL ${SOURCE_PATH}/COPYING DESTINATION ${CURRENT_PACKAGES_DIR}/share/proj4 RENAME copyright)
+file(INSTALL "${CMAKE_CURRENT_LIST_DIR}/usage" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}")
+file(INSTALL "${SOURCE_PATH}/COPYING" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)

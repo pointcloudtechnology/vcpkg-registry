@@ -1,9 +1,44 @@
 {
   "name": "proj",
   "version-string": "0",
-  "port-version": 0,
-  "description": "a stub package that pulls in proj4. Do not depend on this package.",
+  "port-version": 1,
+  "description": "A stub package that pulls in the legacy proj4 port",
+  "license": "MIT",
   "dependencies": [
-    "proj4"
-  ]
+    {
+      "name": "proj4",
+      "default-features": false,
+      "version>=": "6.3.2"
+    }
+  ],
+  "default-features": [
+    "database",
+    "tiff"
+  ],
+  "features": {
+    "database": {
+      "description": "generate database",
+      "dependencies": [
+        {
+          "name": "sqlite3",
+          "features": [
+            "tool"
+          ],
+          "platform": "!uwp & !arm"
+        }
+      ]
+    },
+    "tiff": {
+      "description": "Enable TIFF support to read some grids",
+      "dependencies": [
+        "tiff"
+      ]
+    },
+    "tools": {
+      "description": "generate tools",
+      "dependencies": [
+        "curl"
+      ]
+    }
+  }
 }
