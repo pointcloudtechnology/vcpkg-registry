@@ -77,6 +77,21 @@ vcpkg_cmake_install()
 vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/proj4)
 vcpkg_copy_pdbs()
 
+# ➜ Add proj.pc for pkg-config since some dependencies (e.g., libgeotiff) are looking for this
+file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/share/pkgconfig")
+file(WRITE "${CURRENT_PACKAGES_DIR}/share/pkgconfig/proj.pc" "
+prefix=${CURRENT_PACKAGES_DIR}
+exec_prefix=\\${prefix}
+libdir=\\${prefix}/lib
+includedir=\\${prefix}/include
+
+Name: proj
+Description: PROJ library for cartographic projections
+Version: ${VERSION}
+Libs: -L\\${libdir} -lproj
+Cflags: -I\\${includedir}
+")
+
 file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/include)
 file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/share)
 
