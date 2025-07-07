@@ -62,7 +62,7 @@ vcpkg_cmake_configure(
         -DBUILD_LIBPROJ_SHARED=${PROJ_SHARED_LIBS}
         -DPROJ_LIB_SUBDIR=lib
         -DPROJ_INCLUDE_SUBDIR=include
-        -DPROJ_DATA_SUBDIR=share/proj4
+        -DPROJ_DATA_SUBDIR=share/proj
         -DBUILD_CCT=OFF
         -DBUILD_CS2CS=OFF
         -DBUILD_GEOD=OFF
